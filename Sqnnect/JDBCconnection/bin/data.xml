@@ -1,0 +1,71 @@
+<?xml version ="1.0" encoding = "UTF-8" ?>
+<class>
+<questions>
+<id>
+0. Get all the products of a Supplier sorted in order of their price."
+"1. Add price of all the products for all Categories and get the result in sorted order of their price."
+"2. Get order details for all customers.\r\n"
+"3. Get order details and products associated with a particular order for a particular customer."
+"4. Get all the products for a Supplier in a row. [Products should be separated by comma]."
+"5. Write a function to calculate the total price of a Order [Parameter to pass Order Id] "
+"6. Create a view of customers, order details and orders. Name the view as ‘vw_customers_order’."
+"7.Create a new table consisting of “customer id”,”customer_name”, “all_orders”. Apply  (while / for)"
+" loop in Stored procedure to get list of customers and then for every customer fetch all his "
+"orders separated by “,”. Insert the same into the newly created table"
+"8.Create a table consisting of all the columns present in ‘vw_customers_order’. "
+"Write a Stored procedure to read from this view and insert all the entries in "
+"the newly created table. Name Stored Procedure as ‘sp_insert_customers_order’"
+"9.Create a table consisting of all the columns present in ‘vw_customers_order’. "
+"Write a Stored procedure to read from this view and insert all the entries in the"
+"newly created table for a given customer. Name Stored Procedure as ‘sp_insert_customers_order(customer_id int)’"
+</id></questions>
+
+
+    <value id  = "0">select suppliers.SupplierID,ProductName,UnitPrice
+                from products
+                inner join suppliers on products.SupplierID=suppliers.SupplierID
+                where suppliers.SupplierID='1'
+                order by UnitPrice</value>
+  
+	<value id ="1">select categories.categoryname,sum(products.unitprice) as TotalPrice
+                from categories inner join products
+                on products.CategoryId=categories.CategoryId
+                group by categoryname order by TotalPrice</value>
+ 	<value id = "2">SELECT customers.contactName, `order details`.* from
+                ((`order details`
+                INNER JOIN orders
+                ON orders.OrderID=`order details`.OrderID)
+                inner join customers
+                on orders.CustomerID=customers.CustomerID)
+    </value>
+    <value id = "3">SELECT customers.contactName, products.productName,`order details`.* from
+                (((`order details` INNER JOIN orders
+                ON orders.OrderID=`order details`.OrderID)inner join products
+                on products.productId=`order details`.productID) inner join
+                customers
+                on orders.CustomerID=customers.CustomerID) WHERE
+                ContactName='Maria Anders'
+    </value>
+    <value id = "22">SELECT group_concat(productName) AS Product from products
+                WHERE SupplierID = '8'
+    </value>
+<!--    <value id = "5">delimiter //
+                CREATE FUNCTION Totalpriceorder(od1 int)
+                Returns float
+                deterministic
+                BEGIN
+                declare sumoforder float;
+                SET @sumOfOrder := (SELECT SUM(unitprice*quantity) FROM `order
+                details` WHERE `order details`.orderid = od1);
+                return @sumOfOrder;
+                end //
+                delimiter ;
+    </value>-->
+    <value id = "6">SELECT * from vw_customers_order;</value>
+    <value id = "7">SELECT Customers.customerID, Customers.ContactName, group_concat(Orders.orderID) from Customers 
+    inner join orders on customers.customerID = orders.customerID;</value>
+    <value id = "8">SELECT * from sp_insert_customer_order;</value>
+    <value id = "9">SELECT * from sp_insert_customer_order1 ;</value>
+    <value id = "20">SELECT * from categories;</value>
+  
+</class>
