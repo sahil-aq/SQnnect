@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 public class XPathParserDemo {
 
    public static void main(String[] args) {
-	   String query = null;
+	  
       
       try {
          File inputFile = new File("C:\\Users\\yash\\eclipse-workspace\\JDBCconnection\\src\\data.xml");
@@ -39,7 +39,7 @@ public class XPathParserDemo {
       if (node1.getNodeType() == Node.ELEMENT_NODE)   
       {  
       Element eElement1 = (Element) node1;  
-   System.out.println( eElement1.getElementsByTagName("id").item(0).getTextContent()); 
+      System.out.println("Student id: "+ eElement1.getElementsByTagName("id").item(0).getTextContent()); 
       System.out.println();
       }
       }
@@ -49,57 +49,16 @@ public class XPathParserDemo {
  
 //         System.out.println("Root element: " + doc.getDocumentElement().getNodeName()); 
          Scanner sc = new Scanner(System.in);
-         System.out.println("Enter the choice");
+         System.out.println("Enter the choice from 0-9");
          int ch = sc.nextInt();
          NodeList nodeList = doc.getElementsByTagName("value");
-  //      System.out.println(nodeList.getLength());
-//       System.out.println(nodeList.item(1));
-         
-         for(int i = 0;i<=nodeList.getLength();i++)
-         {
-        	 Node node = nodeList.item(i);
-        	 
-        	 if (node.getNodeType() == Node.ELEMENT_NODE)   
-             {  
-             Element eElement = (Element) node;  
-             String q = eElement.getAttribute("id");
-        //    	System.out.println(q);
-                 int a = Integer.parseInt(q);
-                 if (a == ch) {
-                    query = eElement.getTextContent();
-                    break;
-
-                 }
-     //        System.out.println(eElement.getAttribute("id")==ch.toString());
-             }
-         }
-        
-    //    Node node = nodeList.item(ch);
- //       System.out.print(node);
- //       System.out.println(node.getNodeType());
- //       System.out.println(Node.ELEMENT_NODE );
-      //   if (node.getNodeType() == Node.ELEMENT_NODE)   
-     //    {  
-     //    Element eElement = (Element) node;  
-         
-   //     System.out.print(eElement.getAttribute("id"));
-//        for (int itr = 0; itr <= 22; itr++)   
-//        { 
-////        	Node node = nodeList.item(ch);   
-////            if (node.getNodeType() == Node.ELEMENT_NODE)   
-////            {  
-////            Element eElement = (Element) node;  
-//        	String q = eElement.getAttribute("id");
-//       	System.out.println(q);
-//            int a = Integer.parseInt(q);
-//        	if (ch == a) {
-//        		query = eElement.getTextContent(); 
-//        		System.out.println(query);
-//        		break;
-//      	}
-//        }
-//        }
-         
+ 
+       
+         Node node = nodeList.item(ch);   
+         if (node.getNodeType() == Node.ELEMENT_NODE)   
+         {  
+         Element eElement = (Element) node;  
+         String query = eElement.getElementsByTagName("id").item(0).getTextContent();
          try {
         	 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/northwind", "root", "root");
              Statement statement = connection.createStatement();
@@ -126,7 +85,7 @@ public class XPathParserDemo {
              e.printStackTrace();
          }
          
-         
+         }
         // }
          sc.close();
       }
@@ -135,6 +94,6 @@ public class XPathParserDemo {
          {  
          e.printStackTrace(); 
    }
-//	 
+	 
    }}
    
